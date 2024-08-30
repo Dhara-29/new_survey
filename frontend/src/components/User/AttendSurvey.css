@@ -1,0 +1,101 @@
+.survey-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    margin-top: 200px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.question-item {
+    margin-bottom: 20px;
+}
+
+.mcq-options {
+    margin-top: 10px;
+}
+
+.mcq-option {
+    margin-bottom: 10px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+.slider-rating {
+    display: flex;
+    align-items: center;
+}
+
+.slider {
+    width: 100px;
+    margin-right: 10px;
+}
+
+.slider-value {
+    font-size: 16px;
+}
+
+/* AttendSurvey.css */
+
+.rating-stars {
+    display: flex;
+    align-items: center;
+}
+
+.star-label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.star-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.star {
+    color: black; /* Light gray */
+    transition: color 0.2s;
+  
+}
+
+.star.filled {
+    color: #ffc800; /* Gold */
+}
+

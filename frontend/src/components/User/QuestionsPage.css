@@ -1,0 +1,99 @@
+.question_container {
+  max-width: 1200px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  margin-top: 150px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #343a40;
+}
+
+.form-class {
+  margin-bottom: 20px;
+}
+
+.form-class label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #495057;
+}
+
+.form-class input[type="text"],
+.form-class input[type="number"],
+.form-class select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.add-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
+}
+
+.add-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.existing-questions {
+  margin-top: 20px;
+}
+
+.existing-questions h2 {
+  font-size: 20px;
+  color: #343a40;
+}
+
+.existing-questions ul {
+  padding-left: 20px;
+}
+
+.existing-questions ul li {
+  margin-bottom: 15px;
+}
+
+.existing-questions input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-4 {
+  margin-top: 20px;
+}
+
+.mt-2 {
+  margin-top: 10px;
+}
+
+p {
+  font-size: 16px;
+  color: #495057;
+}

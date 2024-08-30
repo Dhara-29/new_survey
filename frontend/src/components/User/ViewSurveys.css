@@ -1,0 +1,92 @@
+/* General styles for the survey cards container */
+.survey-cards-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+.view-survey-main{
+    margin-top: 150PX;
+}
+
+.cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.card {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(105, 41, 41, 0.1);
+    width: 300px;
+    margin: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    background-color: #2b2929b6;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 15px;
+    text-align: left;
+}
+
+.card-description {
+    max-height: 3em; /* Adjust based on the line-height and desired initial height */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 10px;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding-bottom: 0; /* Initial padding for collapsed state */
+}
+
+.card-description.expanded {
+    max-height: none; /* Remove height restriction when expanded */
+    overflow: visible;
+    white-space: normal;
+    padding-bottom: 15px; /* Padding for expanded state */
+}
+
+.card-footer {
+    background-color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+}
+
+.btn-dark {
+    background-color: #343a40;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-dark:hover {
+    background-color: #23272b;
+}
+
+.error-message {
+    color: #dc3545; /* Red color for error messages */
+    text-align: center;
+    margin: 20px 0;
+}
