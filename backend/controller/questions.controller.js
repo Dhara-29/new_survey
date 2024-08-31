@@ -302,7 +302,7 @@ export const getQuestionsBySurveyId = async (req, res, next) => {
       where: { survey_id: survey_id },
 
     });
-
+   console.log(survey_id);
     if (questions.length === 0) {
       return res.status(404).json({ message: 'No questions found for this survey' });
     }

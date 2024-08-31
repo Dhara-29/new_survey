@@ -1,12 +1,14 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import '../User/QuestionsPage.css';
 import Header from './Header';
-import { useLocation } from 'react-router-dom';
 import Footer from './Footer';
-import { toast } from 'react-toastify';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function QuestionsPage() {
+    const navigate = useNavigate();
     const user_id = localStorage.getItem("user_id");
     const [questions, setQuestions] = useState([]);
     const [existingQuestions, setExistingQuestions] = useState([]);
@@ -52,7 +54,8 @@ export default function QuestionsPage() {
     const fetchQuestionsByCategory = async (category_id) => {
         try {
             const questionsResponse = await axios.get(`http://localhost:3000/question/getQuestionsByCategoryId/${category_id}`);
-            setExistingQuestions(questionsResponse.data);
+            const uniqueQuestions = filterUniqueQuestions(questionsResponse.data);
+            setExistingQuestions(uniqueQuestions);
             setNoExistingQuestionsMessage('');
         } catch (error) {
             if (error.response && error.response.status === 404) {
@@ -64,13 +67,25 @@ export default function QuestionsPage() {
         }
     };
 
+    const filterUniqueQuestions = (questions) => {
+        const uniqueQuestionsMap = new Map();
+
+        questions.forEach((question) => {
+            if (!uniqueQuestionsMap.has(question.question_text)) {
+                uniqueQuestionsMap.set(question.question_text, question);
+            }
+        });
+
+        return Array.from(uniqueQuestionsMap.values());
+    };
+
     const updateAllQuestions = () => {
         const combinedQuestions = [
             ...questions,
             ...selectedExistingQuestions
         ];
 
-        const uniqueQuestions = Array.from(new Map(combinedQuestions.map(q => [q.question_id, q])).values());
+        const uniqueQuestions = filterUniqueQuestions(combinedQuestions);
 
         setAllQuestions(uniqueQuestions);
     };
@@ -83,57 +98,18 @@ export default function QuestionsPage() {
         }
     };
 
-    // const handleAddQuestion = async () => {
-    //     if (newQuestion.trim() === '') return;
-
-    //     const isDuplicate = questions.some(q => q.questionData === newQuestion && q.questionType === questionType);
-
-    //     if (isDuplicate) {
-    //         console.warn("This question is already added.");
-    //         return;
-    //     }
-
-    //     const question = {
-    //         questionData: newQuestion,
-    //         questionType: questionType,
-    //         options: questionType === 'MCQ' ? options : [],
-    //         rating: questionType === 'Rating' ? rating : null,
-    //         question_answer_text: null
-    //     };
-
-    //     try {
-    //         const response = await axios.post('http://localhost:3000/question/addQuestion', {
-    //             survey_id: survey_id,
-    //             category_id: category_id,
-    //             user_id: user_id,
-    //             question_type: questionType,
-    //             question_text: newQuestion,
-    //             questionOptions: questionType === 'MCQ' ? options : [],
-    //             question_answer_text: null
-    //         });
-    //         console.log('Question added successfully:', response.data);
-    //         setQuestions(prevQuestions => [...prevQuestions, question]);
-    //         setNewQuestion('');
-    //         setOptions([]);
-    //         setRating(1);
-    //     } catch (err) {
-    //         console.error("Error adding question:", err);
-    //     }
-    // };
-
     const handleAddQuestion = async () => {
         if (newQuestion.trim() === '') return;
-    
-        // Check for duplicate questions in the local state
+
         const isDuplicate = questions.some(
             q => q.questionData === newQuestion && q.questionType === questionType
         );
-    
+
         if (isDuplicate) {
             toast.warn("This question is already added.");
             return;
         }
-    
+
         const question = {
             questionData: newQuestion,
             questionType: questionType,
@@ -141,7 +117,7 @@ export default function QuestionsPage() {
             rating: questionType === 'Rating' ? rating : null,
             question_answer_text: null
         };
-    
+
         try {
             const response = await axios.post('http://localhost:3000/question/addQuestion', {
                 survey_id: survey_id,
@@ -153,61 +129,37 @@ export default function QuestionsPage() {
                 question_answer_text: null
             });
             console.log('Question added successfully:', response.data);
-    
-            // Adding question to local state only if it is not already there
+
             if (!questions.some(q => q.questionData === newQuestion && q.questionType === questionType)) {
                 setQuestions(prevQuestions => [...prevQuestions, question]);
             }
-    
+
             setNewQuestion('');
             setOptions([]);
             setRating(1);
         } catch (err) {
+            console.log("Error : ", err);
             console.error("Error adding question:", err);
         }
     };
-    
-    // const handleAddSelectedQuestions = async () => {
-    //     if (selectedExistingQuestions.length === 0) {
-    //         toast.warn('No questions selected.');
-    //         return;
-    //     }
 
-    //     const selectedQuestionIds = selectedExistingQuestions.map(q => q.question_id);
-
-    //     try {
-    //         const response = await axios.post('http://localhost:3000/question/insertRecords', {
-    //             questionIds: selectedQuestionIds,
-    //             survey_id: survey_id
-    //         });
-
-    //         console.log('Selected questions added successfully:', response.data);
-    //         toast.success('Selected questions added successfully.');
-
-    //         updateAllQuestions();
-    //         setSelectedExistingQuestions([]);
-    //     } catch (error) {
-    //         console.error('Error adding selected questions:', error);
-    //         toast.error('Error adding selected questions.');
-    //     }
-    // };
     const handleAddSelectedQuestions = async () => {
         if (selectedExistingQuestions.length === 0) {
             toast.warn('No questions selected.');
             return;
         }
-    
+
         const selectedQuestionIds = selectedExistingQuestions.map(q => q.question_id);
-    
+
         try {
             const response = await axios.post('http://localhost:3000/question/insertRecords', {
                 questionIds: selectedQuestionIds,
                 survey_id: survey_id
             });
-    
+
             console.log('Selected questions added successfully:', response.data);
             toast.success('Selected questions added successfully.');
-    
+
             updateAllQuestions();
             setSelectedExistingQuestions([]);
         } catch (error) {
@@ -215,7 +167,7 @@ export default function QuestionsPage() {
             toast.error('Error adding selected questions.');
         }
     };
-    
+
     return (
         <>
             <Header />
@@ -322,31 +274,11 @@ export default function QuestionsPage() {
                     </div>
                 )}
 
-                <h2 className='text-center mt-4'>Survey Preview</h2>
-                {allQuestions.length > 0 ? (
-                    <ul>
-                        {allQuestions.map((q, index) => (
-                            <li key={index}>
-                                <strong>Question No.: {index + 1} &nbsp;&nbsp;</strong>
-                                <strong>{q.question_text}</strong>
-                                {q.questionType === 'MCQ' && (
-                                    <ul>
-                                        {q.options && q.options.map((opt, i) => (
-                                            <li key={i}>{opt}</li>
-                                        ))}
-                                    </ul>
-                                )}
-                                {q.questionType === 'Rating' && (
-                                    <p>Rating: {q.rating}</p>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No questions added yet.</p>
-                )}
+               <button className='btn btn-dark' onClick={()=>navigate('/surveyPreview',{state:{survey_id:survey_id}})}>Survey Preview</button>
+               
             </div>
             <Footer />
         </>
     );
 }
+

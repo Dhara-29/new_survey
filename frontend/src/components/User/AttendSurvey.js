@@ -49,26 +49,32 @@ export default function AttendSurvey() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            console.log("Inside submit ");
             // Prepare the responses object
             const formattedResponses = {};
             questions.forEach(question => {
                 const question_id = question.question_id;
                 formattedResponses[question_id] = responses[question_id] || {
+                    question_id:question_id,
                     answer_text: '',
                     selected_option: '',
                     answer_numeric: null
                 };
+                console.log("Question id : ",question_id);
             });
+
             console.log("Formatted Responses:", formattedResponses);
 
+            // Send the response to the backend API
             await axios.post('http://localhost:3000/surveyResponse/addResponse', {
                 survey_id,
                 user_id,
-                responses: formattedResponses
+                responses: formattedResponses,
             });
 
             alert('Responses submitted successfully!');
         } catch (error) {
+             console.log("Error : ",error);
             console.error('Error submitting responses:', error);
         }
     };
@@ -142,7 +148,7 @@ export default function AttendSurvey() {
                         <button type="submit" className="btn-dark">Submit</button>
                     </form>
                 )}
-            </div>
+            </div>  
         </>
     );
 }

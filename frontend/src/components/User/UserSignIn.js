@@ -5,7 +5,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import Header from "./Header";
-import ApiUrl from "./ApiUrl";
+import ApiUrl from "./ApiUrl.js";
 
 export default function UserSignIn() {
     const navigate = useNavigate();
@@ -86,16 +86,17 @@ export default function UserSignIn() {
 
     const signin = () => {
         if (validation()) {
-            axios.post(ApiUrl.SIGN_IN, { email_Address, password })
-                .then(res => {
-                    console.log("signin block called");
-                    console.log(res.data.user_id);
-                    setuserId(user_id);
-                    let user = JSON.stringify(res.data.user);
-                    console.log("User Data"+user);
-                    localStorage.setItem("user", user);
-                    localStorage.setItem("user_id", res.data.user_id);
-                    Swal.fire({
+            axios.post('http://localhost:3000/user/userSignIn', { email_Address: email_Address, password: password })
+            .then(res => {
+                console.log("signin block called");
+                console.log(res.data.user_id);
+                setuserId(user_id);
+                let user = JSON.stringify(res.data.user);
+                console.log("User Data" + user);
+                localStorage.setItem("user", user);
+                localStorage.setItem("user_id", res.data.user_id);
+                console.log("inside signin");
+                Swal.fire({
                         position: "center",
                         icon: "success",
                         title: "Login Successfully",
@@ -111,7 +112,7 @@ export default function UserSignIn() {
                         text: "Invalid Username or Password ",
                         footer: '<a href="/userSignUp">create a new one?</a>'
                     });
-                    console.log("error in sign in function"+err);
+                    console.log("error in sign in function" + err);
                 });
         } else {
             toast.error("Please fill all fields");
@@ -123,7 +124,7 @@ export default function UserSignIn() {
     };
 
     return <>
-        <Header/>
+        <Header />
         <div className='container-fluid m-0 p-0' style={{ maxWidth: "100%", height: "100vh", backgroundColor: "" }}>
             <div className="container d-flex justify-content-center align-items-start min-vh-100" style={{ backgroundColor: "", marginTop: "10rem", height: "auto" }}>
                 <div className="row border rounded-5 p-3 bg-white shadow box-area mt-5">
@@ -189,5 +190,5 @@ export default function UserSignIn() {
                 </div>
             </div>
         </div>
-        </>   
+    </>
 }

@@ -2,11 +2,12 @@ import Category from "../model/category.model.js";
 
 export const addCategory = async (req, res, next) => {
     try {
+        console.log("inside category ");
         let category = await Category.findOne({ where: { category_name: req.body.category_name } })
-        const { category_id, category_name, user_id } = req.body;
+        const { category_name, user_id } = req.body;
         if (!category) {
             const category = await Category.create({
-                category_id,
+               
                 category_name,
                 user_id
             }).then((result) => {
@@ -44,6 +45,7 @@ export const removeCategory = async (req, res) => {
 
         res.status(200).json({ message: 'Category deleted successfully' });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Error deleting category', details: error.message });
     }
 };

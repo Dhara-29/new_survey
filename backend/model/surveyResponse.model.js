@@ -12,6 +12,7 @@ const Response = sequelize.define('Response', {
     survey_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        foreignKey:true,
         references: {
             model: Survey, // Adjust model name if needed
             key: 'survey_id'
@@ -20,6 +21,7 @@ const Response = sequelize.define('Response', {
     user_id: {
         type: DataTypes.INTEGER,
         allowNull: true, // Nullable to allow anonymous responses
+        foreignKey: true,
         references: {
             model: User, // Adjust model name if needed
             key: 'user_id'
@@ -27,9 +29,10 @@ const Response = sequelize.define('Response', {
     },
     question_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
+        foreignKey:true,
         references: {
-            model:Questions, // Adjust model name if needed
+            model: Questions, // Adjust model name if needed
             key: 'question_id'
         }
     },
@@ -51,7 +54,7 @@ const Response = sequelize.define('Response', {
     }
 }, {
     tableName: 'Response',
-    timestamps: false ,// Assuming `created_at` is the only timestamp and not using Sequelize's default timestamps
+    timestamps: false,// Assuming `created_at` is the only timestamp and not using Sequelize's default timestamps
     indexes: [
         {
             unique: true,
@@ -60,7 +63,7 @@ const Response = sequelize.define('Response', {
     ]
 });
 
-sequelize.sync()    
+sequelize.sync()
     .then(() => {
         console.log("Response table created....");
     }).catch(err => {

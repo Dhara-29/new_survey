@@ -13,6 +13,8 @@ import Footer from './components/User/Footer.js';
 import UserProfile from './components/User/UserProfile.js';
 import ViewParticularSurvey from './components/User/ViewParticularSurvey.js';
 import AttendSurvey from './components/User/AttendSurvey.js';
+import ApiUrl from './components/User/ApiUrl.js';
+import SurveyPreview from './components/User/SurveyPreview.js';
 function App() {
   return <>
     <Routes>
@@ -22,6 +24,7 @@ function App() {
       <Route path='/userProfile' element={<UserProfile />} />
       <Route path='/createSurvey' element={<CreateSurveys />} />
       <Route path='/questionsPage' element={<QuestionsPage />} />
+      <Route path='/surveyPreview' element={<SurveyPreview />} />
       <Route path='/viewSurveys' element={<ViwSurveys />} />
       <Route path='/attendSurvey' element={<AttendSurvey />} />
       <Route path='/ViewParticularSurvey' element={<ViewParticularSurvey />} />

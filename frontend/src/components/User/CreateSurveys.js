@@ -5,10 +5,11 @@ import Header from './Header';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
-import ApiUrl from './ApiUrl';
+import ApiUrl from './ApiUrl.js';
 
 export default function CreateSurveys() {
     const navigate = useNavigate();
+    
     const userId = localStorage.getItem('user_id');
     const [categoryList, setCategoryList] = useState([]);
     const [newCategory, setNewCategory] = useState('');
@@ -22,7 +23,7 @@ export default function CreateSurveys() {
     const [categorySelected, setCategorySelected] = useState(false);
 
     useEffect(() => {
-        axios.get(ApiUrl.GET_ALL_CATEGORIES)
+        axios.get("http://localhost:3000/category/getAllCategories")
             .then(response => {
                 if (Array.isArray(response.data)) {
                     const categories = response.data.map(category => ({
@@ -48,7 +49,7 @@ export default function CreateSurveys() {
             return;
         }
 
-        axios.post(ApiUrl.ADD_CATEGORY, { category_name: newCategory, user_id: userId })
+        axios.post("http://localhost:3000/category/addCategory", { category_name: newCategory, user_id: userId })
             .then(response => {
                 if (response.status === 200) {
                     Swal.fire({

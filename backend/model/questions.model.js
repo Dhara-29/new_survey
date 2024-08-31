@@ -80,5 +80,3 @@ sequelize.sync()
       });
 
 export default Questions;
-
-
