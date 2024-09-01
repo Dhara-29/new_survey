@@ -1,9 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from './Header';
 export default function SurveyPreview() {
+    const navigate = useNavigate();
     const location = useLocation();
     const survey_id = location.state?.survey_id;
     const [questions, setQuestions] = useState([]);
@@ -146,6 +147,7 @@ export default function SurveyPreview() {
                                 )}
                             </div>
                         ))}
+                        <button className='btn btn-outline-dark' onClick={()=>navigate('/questionsPage')}>Go back</button>
                     </div>
                 ) : (
                     <p>No questions found.</p>

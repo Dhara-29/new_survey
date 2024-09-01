@@ -140,7 +140,7 @@ export default function SurveyCards() {
                                             </button><br></br>
                                             <button className='btn btn-outline-success mt-3 ' onClick={()=>navigate('/attendSurvey', { state: { survey_id: survey.survey_id ,user_id:user_id} })}>Attend it</button>
                                             &nbsp;
-                                         
+
                                             <button className='btn btn-outline-danger mt-3' onClick={() => handleRemoveSurvey(survey.survey_id, user_id)}>Remove Survey</button>
                                         </div>
                                         <div className="card-footer">

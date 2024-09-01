@@ -15,10 +15,13 @@ import ViewParticularSurvey from './components/User/ViewParticularSurvey.js';
 import AttendSurvey from './components/User/AttendSurvey.js';
 import ApiUrl from './components/User/ApiUrl.js';
 import SurveyPreview from './components/User/SurveyPreview.js';
+import BarChart from './components/User/BarChart.js';
+import ViewAttendedSurvey from './components/User/ViewAttendedSurvey.js';
 function App() {
   return <>
     <Routes>
       <Route path='/' element={<Home />} />
+      <Route path='/barChart' element={<BarChart />} />
       <Route path='/userSignUp' element={<UserSignUp />} />
       <Route path='/userSignIn' element={<UserSignIn />} />
       <Route path='/userProfile' element={<UserProfile />} />
@@ -27,10 +30,11 @@ function App() {
       <Route path='/surveyPreview' element={<SurveyPreview />} />
       <Route path='/viewSurveys' element={<ViwSurveys />} />
       <Route path='/attendSurvey' element={<AttendSurvey />} />
+      <Route path='/ViewAttendedSurvey' element={<ViewAttendedSurvey />} />
       <Route path='/ViewParticularSurvey' element={<ViewParticularSurvey />} />
       <Route path='/aboutUs' element={<AboutUs />} />
       <Route path='/footer' element={<Footer />} />
-      
+
     </Routes>
   </>
 }

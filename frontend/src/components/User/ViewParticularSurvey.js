@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-
+import '../User/ViewAttendedSurvey.css';
 export default function ViewParticularSurvey() {
     const location = useLocation();
     const [questions, setQuestions] = useState([]);

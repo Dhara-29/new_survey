@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AttendSurvey.css'; // Import your custom CSS
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from './Header';
 
 export default function AttendSurvey() {
     const location = useLocation();
     const survey_id = location.state?.survey_id;
     const user_id = location.state?.user_id;
-
+    const navigate = useNavigate();
     const [questions, setQuestions] = useState([]);
     const [responses, setResponses] = useState({}); // To store user responses
     const [loading, setLoading] = useState(true);
@@ -55,12 +55,12 @@ export default function AttendSurvey() {
             questions.forEach(question => {
                 const question_id = question.question_id;
                 formattedResponses[question_id] = responses[question_id] || {
-                    question_id:question_id,
+                    question_id: question_id,
                     answer_text: '',
                     selected_option: '',
                     answer_numeric: null
                 };
-                console.log("Question id : ",question_id);
+                console.log("Question id : ", question_id);
             });
 
             console.log("Formatted Responses:", formattedResponses);
@@ -73,8 +73,9 @@ export default function AttendSurvey() {
             });
 
             alert('Responses submitted successfully!');
+
         } catch (error) {
-             console.log("Error : ",error);
+            console.log("Error : ", error);
             console.error('Error submitting responses:', error);
         }
     };
@@ -145,10 +146,17 @@ export default function AttendSurvey() {
                         ) : (
                             <p>No questions available for this survey.</p>
                         )}
-                        <button type="submit" className="btn-dark">Submit</button>
+                        <button type="submit" className="btn-dark">Submit</button> &nbsp;
+
+
+                        <button className="btn btn-outline-dark" onClick={() => navigate('/viewSurveys')}>Go back</button>
                     </form>
                 )}
-            </div>  
+            </div>
+            <div>
+            
+            <button className="btn-dark" onClick={() => navigate('/ViewAttendedSurvey',{state:{survey_id}})}>View Result  </button> &nbsp;
+            </div>
         </>
     );
 }

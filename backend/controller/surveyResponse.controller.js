@@ -44,3 +44,35 @@ export const addResponse = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+export const viewResponse = async (req, res) => {
+    const { survey_id, user_id } = req.params; // Assuming query params for survey_id and user_id
+
+    console.log("Survey id:--", survey_id);
+    console.log("User id:--", user_id);
+
+    try {
+        // Fetch the responses for the given survey and user
+        const responses = await Response.findAll({
+            where: { survey_id, user_id }
+        });
+
+        if (!responses.length) {
+            return res.status(404).json({ error: 'No responses found for this survey and user.' });
+        }
+
+        // Format the responses in a more readable structure
+        const formattedResponses = responses.map(response => ({
+            question_id: response.question_id,
+            answer_text: response.answer_text,
+            selected_option: response.selected_option,
+            answer_numeric: response.answer_numeric,
+            created_at: response.created_at
+        }));
+
+        res.status(200).json({ responses: formattedResponses });
+    } catch (error) {
+        console.error('Error fetching responses:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
